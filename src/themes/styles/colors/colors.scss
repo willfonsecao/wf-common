@@ -1,0 +1,134 @@
+@function color($color, $scale: 'default') {
+    @return map-get($color, $scale);
+}
+$zoom: var(--zoom, 0);
+
+$primary: (
+    name: 'primary',
+    default: var(--primary-default, #5055d8),
+    900: var(--primary-900, #2c1fa1),
+    800: var(--primary-800, #3a36b4),
+    700: var(--primary-700, #4141c0),
+    600: var(--primary-600, #4a4ccd),
+    500: var(--primary-500, #5055d8),
+    400: var(--primary-400, #6970df),
+    300: var(--primary-300, #848be6),
+    200: var(--primary-200, #a8aced),
+    100: var(--primary-100, #cbcdf4),
+    50: var(--primary-50, #eaebfb),
+);
+
+$secondary: (
+    name: 'secondary',
+    default: var(--secondary-default, #f8f8f8),
+    900: var(--secondary-900, #161616),
+    800: var(--secondary-800, #363636),
+    700: var(--secondary-700, #545454),
+    600: var(--secondary-600, #676767),
+    500: var(--secondary-500, #8f8f8f),
+    400: var(--secondary-400, #b0b0b0),
+    300: var(--secondary-300, #d4d4d4),
+    200: var(--secondary-200, #e5e5e5),
+    100: var(--secondary-100, #f0f0f0),
+    50: var(--secondary-50, #f8f8f8),
+);
+
+$background: (
+    name: 'background',
+    default: var(--background-default, white),
+    900: var(--background-900, #262626),
+    800: var(--background-800, #484848),
+    700: var(--background-700, #616366),
+    600: var(--background-600, #76777a),
+    500: var(--background-500, #9fa0a3),
+    400: var(--background-400, #bdbfc2),
+    300: var(--background-300, #e0e2e5),
+    200: var(--background-200, #eef0f3),
+    100: var(--background-100, #f4f6f9),
+    50: var(--background-50, white),
+);
+
+$text: (
+    name: 'text',
+    default: var(--text-default, #161616),
+    900: var(--text-900, #161616),
+    800: var(--text-800, #363636),
+    700: var(--text-700, #545454),
+    600: var(--text-600, #676767),
+    500: var(--text-500, #8f8f8f),
+    400: var(--text-400, #afafaf),
+    300: var(--text-300, #d4d4d4),
+    200: var(--text-200, #e5e5e5),
+    100: var(--text-100, #f0f0f0),
+    50: var(--text-50, #ffffff),
+);
+
+$error: (
+    name: 'error',
+    default: var(--error-default, #d67373),
+    900: var(--error-900, #a7221f),
+    800: var(--error-800, #b62d2a),
+    700: var(--error-700, #c33331),
+    600: var(--error-600, #d43c37),
+    500: var(--error-500, #e34539),
+    400: var(--error-400, #de5552),
+    300: var(--error-300, #d67373),
+    200: var(--error-200, #e49999),
+    100: var(--error-100, #f8ccd1),
+    50: var(--error-50, #fcebed),
+);
+
+$warning: (
+    name: 'warning',
+    default: var(--warning-default, #f48727),
+    900: var(--warning-900, #f48727),
+    800: var(--warning-800, #fcc63e),
+    700: var(--warning-700, #fcc63e),
+    600: var(--warning-600, #fedd46),
+    500: var(--warning-500, #f7e844),
+    400: var(--warning-400, #faed5f),
+    300: var(--warning-300, #fcf17c),
+    200: var(--warning-200, #fdf6a2),
+    100: var(--warning-100, #fefac7),
+    50: var(--warning-50, #fffee9),
+);
+
+$success: (
+    name: 'success',
+    default: var(--success-default, #0c9b5b),
+    900: var(--success-900, #00592f),
+    800: var(--success-800, #007843),
+    700: var(--success-700, #00894e),
+    600: var(--success-600, #0c9b5b),
+    500: var(--success-500, #16aa65),
+    400: var(--success-400, #47b77b),
+    300: var(--success-300, #6bc392),
+    200: var(--success-200, #97d3b0),
+    100: var(--success-100, #c0e5cf),
+    50: var(--success-50, #e5f4eb),
+);
+
+$info: (
+    name: 'info',
+    default: var(--info-default, #5055d8),
+    900: var(--info-900, #2c1fa1),
+    800: var(--info-800, #3a36b4),
+    700: var(--info-700, #4141c0),
+    600: var(--info-600, #4a4ccd),
+    500: var(--info-500, #5055d8),
+    400: var(--info-400, #6970df),
+    300: var(--info-300, #848be6),
+    200: var(--info-200, #a8aced),
+    100: var(--info-100, #cbcdf4),
+    50: var(--info-50, #eaebfb),
+);
+
+$black: (
+    name: 'black',
+    default: var(--black, black),
+);
+
+$white: (
+    name: 'white',
+    default: var(--white, white),
+);

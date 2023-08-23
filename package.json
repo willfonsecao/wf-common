@@ -1,0 +1,30 @@
+{
+  "name": "wf-common",
+  "version": "0.0.1",
+  "description": "lib to common stuff",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "start": "webpack-dev-server --open"
+  },
+  "dependencies": {
+    "materialifier": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.1",
+    "node-sass": "^9.0.0",
+    "sass-loader": "^13.3.2",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack-cli": "^5.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willfonsecao/wf-common.git"
+  },
+  "author": "Will Fonseca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willfonsecao/wf-common/issues"
+  },
+  "homepage": "https://github.com/willfonsecao/wf-common#readme"
+}
