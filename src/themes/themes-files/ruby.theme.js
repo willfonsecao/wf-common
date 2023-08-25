@@ -1,7 +1,6 @@
-import { Theme } from '../model/theme.model';
 
-export const green: Theme = {
-    name: 'green',
+export default ruby = {
+    name: 'ruby',
     properties: [
         {
             name: 'black',
@@ -17,17 +16,17 @@ export const green: Theme = {
 
         {
             name: 'primary',
-            default: '#41957d',
-            '900': '#264c3c',
-            '800': '#306855',
-            '700': '#367863',
-            '600': '#3c8871',
-            '500': '#41957d',
-            '400': '#4ea58e',
-            '300': '#66b5a1',
-            '200': '#8dcbbb',
-            '100': '#b8dfd5',
-            '50': '#e2f2ef',
+            default: '#d93d1a',
+            '900': '#c03011',
+            '800': '#d93d1a',
+            '700': '#e7441e',
+            '600': '#f54b23',
+            '500': '#ff5127',
+            '400': '#ff6c46',
+            '300': '#ff8767',
+            '200': '#ffa992',
+            '100': '#ffcbbd',
+            '50': '#fbe9e7',
         },
 
         {

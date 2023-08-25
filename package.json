@@ -1,21 +1,13 @@
 {
   "name": "wf-common",
-  "version": "0.0.1",
+  "version": "0.0.10",
   "description": "lib to common stuff",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server --open"
   },
   "dependencies": {
     "materialifier": "^2.0.3"
   },
   "devDependencies": {
-    "@types/node": "^20.5.1",
-    "node-sass": "^9.0.0",
-    "sass-loader": "^13.3.2",
-    "ts-loader": "^9.4.4",
-    "typescript": "^5.1.6",
-    "webpack-cli": "^5.1.4"
   },
   "repository": {
     "type": "git",

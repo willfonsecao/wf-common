@@ -1,1 +1,0 @@
-export const defaultSpacing = '0.5%';

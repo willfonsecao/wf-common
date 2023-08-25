@@ -1,7 +1,6 @@
-import { Theme } from '../model/theme.model';
 
-export const navy: Theme = {
-    name: 'navy',
+export default cranberry = {
+    name: 'cranberry',
     properties: [
         {
             name: 'black',
@@ -17,17 +16,17 @@ export const navy: Theme = {
 
         {
             name: 'primary',
-            default: '#2b2945',
-            '900': '#2b2945',
-            '800': '#38395e',
-            '700': '#3f426b',
-            '600': '#484b76',
-            '500': '#4e537e',
-            '400': '#666b8f',
-            '300': '#8085a2',
-            '200': '#a2a7bd',
-            '100': '#c6c9d8',
-            '50': '#e8eaef',
+            default: '#a41d4a',
+            '900': '#801643',
+            '800': '#a41d4a',
+            '700': '#b8224d',
+            '600': '#ce2651',
+            '500': '#de2b54',
+            '400': '#e4446b',
+            '300': '#ea6384',
+            '200': '#f18ea7',
+            '100': '#f7bac9',
+            '50': '#fbe4e9',
         },
 
         {

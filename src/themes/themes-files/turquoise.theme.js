@@ -1,7 +1,5 @@
-import { Theme } from '../model/theme.model';
-
-export const purple: Theme = {
-    name: 'purple',
+export default turquoise = {
+    name: 'turquoise',
     properties: [
         {
             name: 'black',
@@ -17,17 +15,17 @@ export const purple: Theme = {
 
         {
             name: 'primary',
-            default: '#5055d8',
-            '900': '#2c1fa1',
-            '800': '#3a36b4',
-            '700': '#4141c0',
-            '600': '#4a4ccd',
-            '500': '#5055d8',
-            '400': '#6970df',
-            '300': '#848be6',
-            '200': '#a8aced',
-            '100': '#cbcdf4',
-            '50': '#eaebfb',
+            default: '#54b6bb',
+            '900': '#0c4e4b',
+            '800': '#116969',
+            '700': '#127979',
+            '600': '#14898b',
+            '500': '#159699',
+            '400': '#33a6aa',
+            '300': '#54b6bb',
+            '200': '#84cbd0',
+            '100': '#b5dfe2',
+            '50': '#e1f2f4',
         },
 
         {

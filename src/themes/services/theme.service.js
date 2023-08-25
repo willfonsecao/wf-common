@@ -1,51 +1,47 @@
-import { generateAccentPalette } from 'materialifier';
+const { generateAccentPalette } = require('materialifier');
+const { darkMode } = require('../themes-files/dark-mode.theme');
+const { AvaiableThemesUtil } = require('../utils/avaiable-themes.util');
+const { purple } = require('../themes-files/purple.theme');
 
-import { Property } from "../model/property.model";
-import { Theme } from "../model/theme.model";
-import { ThemesConfigurations } from "../model/themes.configurations";
-import { darkMode } from "../themes-files/dark-mode.theme";
-import { AvaiableThemesUtil } from "../utils/avaiable-themes.util";
-import { purple } from '../themes-files/purple.theme';
+class ThemeService {
+    constructor(config) {
+        this.activeTheme;
+        this.zoom = 1;
+        this.maxZoomSize = 99999999;
+        this.minZoomSize = -99999999;
+        this.previousActiveTheme;
+        this.availableThemes = AvaiableThemesUtil.getAvaiableThemes();
+        this.isDarkModeEnabled = false;
 
-export class ThemeService {
-    private activeTheme!: Theme;
-    private zoom = 1;
-    private maxZoomSize = 99999999;
-    private minZoomSize = -99999999;
-    private previousActiveTheme!: Theme;
-    private availableThemes: Theme[] = AvaiableThemesUtil.getAvaiableThemes();
-    private isDarkModeEnabled = false;
-
-    constructor(config: ThemesConfigurations) {
         this.buildFromCustomConfig(config);
     }
 
-    addTheme(theme: Theme): void {
+    addTheme(theme) {
         this.availableThemes.push(theme);
     }
 
-    getAvailableThemes(): Theme[] {
+    getAvailableThemes() {
         return this.availableThemes;
     }
 
-    getActiveTheme(): Theme {
+    getActiveTheme() {
         return this.activeTheme;
     }
 
-    getPropertyScale(themeName: string, propertyName: string): Partial<Property> | undefined {
+    getPropertyScale(themeName, propertyName) {
         return this.getThemeByName(themeName)?.properties.find(prop => prop.name === propertyName);
     }
 
-    getActiveThemeColorScale(variableName: string, scale: string): string | undefined {
+    getActiveThemeColorScale(variableName, scale) {
         return this.getColor(this.activeTheme.name, variableName, scale);
     }
 
-    getColor(themeName: string, variableName: string, scale: string): string | undefined {
-        const theme: Theme | undefined = this.availableThemes.find((th) => th.name === themeName);
+    getColor(themeName, variableName, scale) {
+        const theme = this.availableThemes.find(th => th.name === themeName);
         if (theme) {
-            const property: Partial<Property> | undefined = theme.properties.find((pro) => pro.name === variableName);
+            const property = theme.properties.find(pro => pro.name === variableName);
             if (property) {
-                return (property as any)[scale];
+                return property[scale];
             }
             console.error(`Cannot find any variable called ${variableName} in the ${themeName} theme`);
             return undefined;
@@ -54,7 +50,7 @@ export class ThemeService {
         return undefined;
     }
 
-    toggleDarkMode(): void {
+    toggleDarkMode() {
         if (this.isDarkModeEnabled) {
             this.setActiveTheme(this.previousActiveTheme);
             this.activeTheme = this.previousActiveTheme;
@@ -66,8 +62,8 @@ export class ThemeService {
         this.isDarkModeEnabled = !this.isDarkModeEnabled;
     }
 
-    activateTheme(themeName: string): void {
-        const theme: Theme | undefined = this.availableThemes.find((t) => t.name === themeName);
+    activateTheme(themeName) {
+        const theme = this.availableThemes.find(t => t.name === themeName);
         if (theme) {
             this.previousActiveTheme = this.activeTheme;
             this.setActiveTheme(theme);
@@ -76,42 +72,42 @@ export class ThemeService {
         }
     }
 
-    increaseZoom(): void {
+    increaseZoom() {
         const value = this.getIncreasedZoom();
         this.zoom = this.adjustZoomToLimits(value);
         this.changeZoomHtmlVariable();
     }
 
-    decreaseZoom(): void {
+    decreaseZoom() {
         const value = this.getDecreasedZoom();
         this.zoom = this.adjustZoomToLimits(value);
         this.changeZoomHtmlVariable();
     }
 
-    resetZoom(): void {
+    resetZoom() {
         this.zoom = 0;
         this.changeZoomHtmlVariable();
     }
 
-    generateScale(color: string, propertyName: string, replaceOnActiveTheme: boolean = false): void {
-        const colors = generateAccentPalette(color.toLocaleLowerCase());
+    generateScale(color, propertyName, replaceOnActiveTheme = false) {
+        const colors = generateAccentPalette(color.toLowerCase());
         const palette = this.convertToPalette(colors);
-        const defaultScale = this.getDefaultScale(color.toLocaleLowerCase(), palette);
+        const defaultScale = this.getDefaultScale(color.toLowerCase(), palette);
         const property = this.createPropertie(propertyName, defaultScale, palette);
         this.setColorsToWindow(property);
         this.replacePropertyOnActiveTheme(property, replaceOnActiveTheme);
     }
 
-    private addPrimaryColorOnDarkMode(): void {
+    addPrimaryColorOnDarkMode() {
         const primary = this.getPropertyScale(this.previousActiveTheme.name, 'primary');
         if (primary) {
             darkMode.properties.push(primary);
         }
     }
 
-    private replacePropertyOnActiveTheme(property: Property, replaceOnActiveTheme: boolean): void {
+    replacePropertyOnActiveTheme(property, replaceOnActiveTheme) {
         if (replaceOnActiveTheme) {
-            const filteredProp = this.activeTheme.properties.find((prop) => prop.name === property.name);
+            const filteredProp = this.activeTheme.properties.find(prop => prop.name === property.name);
             if (filteredProp) {
                 const index = this.activeTheme.properties.indexOf(filteredProp);
                 this.activeTheme.properties[index] = property;
@@ -119,17 +115,17 @@ export class ThemeService {
         }
     }
 
-    private setColorsToWindow(propertie: any): void {
+    setColorsToWindow(property) {
         if (this.isOnWeb()) {
-            Object.keys(propertie).forEach((key) => {
+            Object.keys(property).forEach(key => {
                 if (key !== 'name') {
-                    this.setKeyValueProperty(`--${propertie.name}-${key}`, propertie[key]);
+                    this.setKeyValueProperty(`--${property.name}-${key}`, property[key]);
                 }
             });
         }
     }
 
-    private convertToPalette(colors: string[]): any {
+    convertToPalette(colors) {
         let palette = {};
         let scale = 50;
         for (const color of colors) {
@@ -141,9 +137,9 @@ export class ThemeService {
         return palette;
     }
 
-    private createPropertie(propertieName: string, scale: string, palette: any): any {
-        let propertie: any = { name: propertieName, default: palette[scale] };
-        const keys: string[] = Object.keys(palette);
+    createPropertie(propertieName, scale, palette) {
+        let propertie = { name: propertieName, default: palette[scale] };
+        const keys = Object.keys(palette);
         for (const key of keys) {
             if (Number(key)) {
                 propertie = { ...propertie, [key]: palette[key] };
@@ -152,8 +148,8 @@ export class ThemeService {
         return propertie;
     }
 
-    private getDefaultScale(color: string, palette: any): string {
-        const keys: string[] = Object.keys(palette);
+    getDefaultScale(color, palette) {
+        const keys = Object.keys(palette);
         let scale = '400';
         for (const key of keys) {
             if (palette[key] === color) {
@@ -164,7 +160,7 @@ export class ThemeService {
         return scale;
     }
 
-    private buildZoom(config: ThemesConfigurations): void {
+    buildZoom(config) {
         const zoomValue = config.zoom ? config.zoom.defaultZoom : 1;
         this.maxZoomSize = config.zoom && config.zoom.maxZoom ? config.zoom.maxZoom : this.maxZoomSize;
         this.minZoomSize = config.zoom && config.zoom.minZoom ? config.zoom.minZoom : this.minZoomSize;
@@ -172,21 +168,21 @@ export class ThemeService {
         this.changeZoomHtmlVariable();
     }
 
-    private changeZoomHtmlVariable(): void {
+    changeZoomHtmlVariable() {
         if (this.isOnWeb()) {
             document.documentElement.style.setProperty('--zoom', this.zoom.toString());
         }
     }
 
-    private getIncreasedZoom(): number {
+    getIncreasedZoom() {
         return this.zoom + 0.25;
     }
 
-    private getDecreasedZoom(): number {
+    getDecreasedZoom() {
         return this.zoom - 0.25;
     }
 
-    private adjustZoomToLimits(size: number): number {
+    adjustZoomToLimits(size) {
         if (this.isBiggerThanMaxZoom(size)) {
             return this.maxZoomSize;
         } else if (this.isSmallerThanMinZoom(size)) {
@@ -195,22 +191,22 @@ export class ThemeService {
         return size;
     }
 
-    private isBiggerThanMaxZoom(value: number): boolean {
+    isBiggerThanMaxZoom(value) {
         return value > this.maxZoomSize;
     }
 
-    private isSmallerThanMinZoom(value: number): boolean {
+    isSmallerThanMinZoom(value) {
         return value < this.minZoomSize;
     }
 
-    private buildFromCustomConfig(customThemes: ThemesConfigurations): void {
+    buildFromCustomConfig(customThemes) {
         this.replaceOrAddTheme(customThemes);
         this.activateCustomActiveTheme(customThemes.activeThemeName);
         this.buildZoom(customThemes);
         this.previousActiveTheme = this.activeTheme;
     }
 
-    private replaceOrAddTheme(customThemes: ThemesConfigurations): void {
+    replaceOrAddTheme(customThemes) {
         if (customThemes.themes && customThemes.replaceDefaultThemes) {
             this.replaceThemes(customThemes.themes);
         } else if (customThemes.themes && !customThemes.replaceDefaultThemes) {
@@ -218,29 +214,29 @@ export class ThemeService {
         }
     }
 
-    private addThemes(customThemes: Theme | Theme[]): void {
+    addThemes(customThemes) {
         if (customThemes && customThemes instanceof Array) {
             customThemes.forEach(theme => this.addTheme(theme));
         } else {
-            this.addTheme(customThemes as Theme);
+            this.addTheme(customThemes);
         }
     }
 
-    private replaceThemes(customThemes: Theme | Theme[]): void {
+    replaceThemes(customThemes) {
         if (customThemes && customThemes instanceof Array) {
             this.availableThemes = [...customThemes];
         } else {
-            this.availableThemes = [customThemes as Theme];
+            this.availableThemes = [customThemes];
         }
     }
 
-    private activateCustomActiveTheme(themeName: string | undefined): void {
+    activateCustomActiveTheme(themeName) {
         if (themeName) {
             this.setDefaultThemeByName(themeName);
         }
     }
 
-    private setDefaultThemeByName(themeName: string): void {
+    setDefaultThemeByName(themeName) {
         const theme = this.getThemeByName(themeName);
         if (theme) {
             this.setActiveTheme(theme);
@@ -249,11 +245,11 @@ export class ThemeService {
         }
     }
 
-    private getThemeByName(name: string): Theme | undefined {
-        return this.getAvailableThemes().find((theme: Theme) => theme.name === name);
+    getThemeByName(name) {
+        return this.getAvailableThemes().find(theme => theme.name === name);
     }
 
-    private setActiveTheme(theme: Theme): void {
+    setActiveTheme(theme) {
         if (theme !== this.activeTheme) {
             this.activeTheme = theme;
             this.addHtmlVariables();
@@ -262,11 +258,11 @@ export class ThemeService {
         }
     }
 
-    private addHtmlVariables(): void {
+    addHtmlVariables() {
         if (this.isOnWeb()) {
-            this.activeTheme.properties.forEach((propertie: any) => {
+            this.activeTheme.properties.forEach(propertie => {
                 this.setKeyValueProperty(`--${propertie.name}-default`, propertie.default);
-                Object.keys(propertie).forEach((key) => {
+                Object.keys(propertie).forEach(key => {
                     if (key !== 'name' && key !== 'default') {
                         this.setKeyValueProperty(`--${propertie.name}-${key}`, propertie[key]);
                     }
@@ -275,11 +271,13 @@ export class ThemeService {
         }
     }
 
-    private setKeyValueProperty(property: any, value: any): void {
+    setKeyValueProperty(property, value) {
         document.documentElement.style.setProperty(property, value);
     }
 
-    private isOnWeb(): boolean {
+    isOnWeb() {
         return typeof document !== 'undefined';
     }
 }
+
+export default ThemeService;

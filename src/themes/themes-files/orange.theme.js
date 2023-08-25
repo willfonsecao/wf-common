@@ -1,6 +1,4 @@
-import { Theme } from '../model/theme.model';
-
-export const orange: Theme = {
+export default orange = {
     name: 'orange',
     properties: [
         {
