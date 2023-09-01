@@ -6,9 +6,9 @@ import { navy } from '../themes-files/navy.theme';
 import { orange } from '../themes-files/orange.theme';
 import { ruby } from '../themes-files/ruby.theme';
 import { turquoise } from '../themes-files/turquoise.theme';
-
-export default class AvaiableThemesUtil {
+class AvaiableThemesUtil {
     static getAvaiableThemes() {
         return [cranberry, dark, green, navy, orange, ruby, purple, turquoise];
     }
 }
+export default AvaiableThemesUtil;

@@ -1,9 +1,23 @@
+import { purple } from '../themes-files';
+import { darkMode } from '../themes-files';
+import AvaiableThemesUtil from '../utils/avaiable-themes.util';
 const { generateAccentPalette } = require('materialifier');
-const { darkMode } = require('../themes-files/dark-mode.theme');
-const { AvaiableThemesUtil } = require('../utils/avaiable-themes.util');
-const { purple } = require('../themes-files/purple.theme');
 
+/**
+ * A service class for managing themes.
+ * @class
+ */
 class ThemeService {
+
+    /**
+    * Creates an instance of ThemeService.
+    * @constructor
+    * @param {Object=} config - Optional settings for the ThemeService class.
+    * @param {boolean=} config.replaceDefaultThemes - Indicates whether default themes should be replaced.
+    * @param {Theme|Theme[]=} config.themes - Theme or array of themes to be added.
+    * @param {string=} config.activeThemeName - Name of the active theme.
+    * @param {Zoom=} config.zoom - Zoom settings.
+    */
     constructor(config) {
         this.activeTheme;
         this.zoom = 1;
@@ -15,27 +29,63 @@ class ThemeService {
 
         this.buildFromCustomConfig(config);
     }
-
+    /**
+     * Adds a new theme to the list of available themes.
+     * @param {{
+     * name: string,
+     * properties: [Partial(Property)]
+     * }} theme - The theme object to be added.
+     */
     addTheme(theme) {
         this.availableThemes.push(theme);
     }
 
+    /**
+     * Gets the list of available themes.
+     * @returns {array} The list of available themes.
+     */
     getAvailableThemes() {
         return this.availableThemes;
     }
 
+    /**
+    * Gets the active theme.
+    * @returns {{
+     * name: string,
+     * properties: [Partial(Property)]
+    * }} The active theme.
+    */
     getActiveTheme() {
         return this.activeTheme;
     }
 
+    /**
+     * Gets a property scale from a theme.
+     * @param {string} themeName - The name of the theme.
+     * @param {string} propertyName - The name of the property.
+     * @returns {object} The property scale.
+     */
     getPropertyScale(themeName, propertyName) {
         return this.getThemeByName(themeName)?.properties.find(prop => prop.name === propertyName);
     }
 
+    /**
+     * Gets the active theme's color scale for a specific variable.
+     * @param {string} variableName - The name of the variable.
+     * @param {number | string} scale - The scale of the color.
+     * @returns {string} The color value from the active theme's scale.
+     */
     getActiveThemeColorScale(variableName, scale) {
         return this.getColor(this.activeTheme.name, variableName, scale);
     }
 
+    /**
+     * Gets the color value from a specific theme's scale.
+     * @param {string} themeName - The name of the theme.
+     * @param {string} variableName - The name of the variable.
+     * @param {number | string} scale - The scale of the color.
+     * @returns {string|undefined} The color value from the theme's scale, or undefined if not found.
+     */
     getColor(themeName, variableName, scale) {
         const theme = this.availableThemes.find(th => th.name === themeName);
         if (theme) {
@@ -161,11 +211,13 @@ class ThemeService {
     }
 
     buildZoom(config) {
-        const zoomValue = config.zoom ? config.zoom.defaultZoom : 1;
-        this.maxZoomSize = config.zoom && config.zoom.maxZoom ? config.zoom.maxZoom : this.maxZoomSize;
-        this.minZoomSize = config.zoom && config.zoom.minZoom ? config.zoom.minZoom : this.minZoomSize;
-        this.zoom = zoomValue;
-        this.changeZoomHtmlVariable();
+        if (config) {
+            const zoomValue = config.zoom ? config.zoom.defaultZoom : 1;
+            this.maxZoomSize = config.zoom && config.zoom.maxZoom ? config.zoom.maxZoom : this.maxZoomSize;
+            this.minZoomSize = config.zoom && config.zoom.minZoom ? config.zoom.minZoom : this.minZoomSize;
+            this.zoom = zoomValue;
+            this.changeZoomHtmlVariable();
+        }
     }
 
     changeZoomHtmlVariable() {
@@ -201,16 +253,16 @@ class ThemeService {
 
     buildFromCustomConfig(customThemes) {
         this.replaceOrAddTheme(customThemes);
-        this.activateCustomActiveTheme(customThemes.activeThemeName);
+        this.activateCustomActiveTheme(customThemes?.activeThemeName);
         this.buildZoom(customThemes);
         this.previousActiveTheme = this.activeTheme;
     }
 
     replaceOrAddTheme(customThemes) {
-        if (customThemes.themes && customThemes.replaceDefaultThemes) {
-            this.replaceThemes(customThemes.themes);
-        } else if (customThemes.themes && !customThemes.replaceDefaultThemes) {
-            this.addThemes(customThemes.themes);
+        if (customThemes?.themes && customThemes?.replaceDefaultThemes) {
+            this.replaceThemes(customThemes?.themes);
+        } else if (customThemes?.themes && !customThemes?.replaceDefaultThemes) {
+            this.addThemes(customThemes?.themes);
         }
     }
 
@@ -231,9 +283,7 @@ class ThemeService {
     }
 
     activateCustomActiveTheme(themeName) {
-        if (themeName) {
-            this.setDefaultThemeByName(themeName);
-        }
+        this.setDefaultThemeByName(themeName);
     }
 
     setDefaultThemeByName(themeName) {

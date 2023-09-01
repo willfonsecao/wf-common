@@ -1,5 +1,5 @@
 
-export default purple = {
+export const purple = {
     name: 'purple',
     properties: [
         {
@@ -46,17 +46,17 @@ export default purple = {
 
         {
             name: 'background',
-            default: 'white',
-            '900': '#262626',
-            '800': '#484848',
-            '700': '#616366',
-            '600': '#76777a',
-            '500': '#9fa0a3',
-            '400': '#bdbfc2',
-            '300': '#e0e2e5',
-            '200': '#eef0f3',
-            '100': '#f4f6f9',
-            '50': 'white',
+            default: '#cecece',
+            '900': '#101010',
+            '800': '#303030',
+            '700': '#4e4e4e',
+            '600': '#616161',
+            '500': '#888888',
+            '400': '#a9a9a9',
+            '300': '#cecece',
+            '200': '#e1e1e1',
+            '100': '#ededed',
+            '50': '#f7f7f7',
         },
 
         {

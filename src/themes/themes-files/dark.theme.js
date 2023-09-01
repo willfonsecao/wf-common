@@ -1,4 +1,4 @@
-export default dark = {
+export const dark = {
     name: 'dark',
     properties: [
         {
@@ -45,17 +45,17 @@ export default dark = {
 
         {
             name: 'background',
-            default: '#262626',
-            '900': '#fffff',
-            '800': '#f6f6f6',
-            '700': '#f1f1f1',
-            '600': '#e5e5e5',
-            '500': '#c3c3c3',
-            '400': '#a5a5a5',
-            '300': '#7b7b7b',
-            '200': '#676767',
-            '100': '#484848',
-            '50': '#262626',
+            default: '#1e1e1e',
+            '900': '#f9f9f9',
+            '800': '#f4f4f4',
+            '700': '#ececec',
+            '600': '#dddddd',
+            '500': '#b9b9b9',
+            '400': '#9a9a9a',
+            '300': '#717171',
+            '200': '#5d5d5d',
+            '100': '#3f3f3f',
+            '50': '#1e1e1e',
         },
 
         {
